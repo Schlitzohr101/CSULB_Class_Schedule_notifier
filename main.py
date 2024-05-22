@@ -180,7 +180,6 @@ def find_and_send_text_upon_open_status_for_class(classes_to_track, subject_soup
                 data = row.find_all('td')
                 temp_class_tuple = get_class_code_and_status(data)
                 if temp_class_tuple[0] == class_tuple[0]:
-                    print("hit a target class")
                     if prev_printed_course_code != span.text:
                         class_code = span.text
                         span = course_header.find('span', class_='courseTitle')
@@ -198,7 +197,7 @@ def continuous_checkup_function(subject_url,classes_to_track):
     subject_content = get_request(subject_url)
     subject_soup = soup_maker(subject_content)
     find_and_send_text_upon_open_status_for_class(classes_to_track,subject_soup)
-    threading.Timer(300, continuous_checkup_function).start()
+    threading.Timer(300, continuous_checkup_function,[subject_url,classes_to_track]).start()
 
 # # Example usage
 # phone_number = '19494698351'  # Replace with the recipient's phone number
