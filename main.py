@@ -7,6 +7,12 @@ import os
 import threading
 import time
 
+def get_time_str():
+    now = datetime.now()
+
+# Format the datetime object to a string
+    formatted_datetime = now.strftime('%Y-%m-%d %H:%M')
+    return formatted_datetime
 
 def get_current_year():
     current_year = datetime.now().year
@@ -193,7 +199,7 @@ def find_and_send_text_upon_open_status_for_class(classes_to_track, subject_soup
                         send_textbelt_sms(os.getenv('PHONE_NUMBER'),f"{class_tuple[0]} is now open! Go register")
               
 def continuous_checkup_function(subject_url,classes_to_track):
-    print("calling continuous funct")
+    print("\n\nTIME OF CALL\n:"+get_time_str())
     subject_content = get_request(subject_url)
     subject_soup = soup_maker(subject_content)
     find_and_send_text_upon_open_status_for_class(classes_to_track,subject_soup)
