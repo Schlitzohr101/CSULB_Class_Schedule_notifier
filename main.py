@@ -184,25 +184,25 @@ def find_and_send_text_upon_open_status_for_class(classes_to_track, subject_soup
                     continue
                 data = row.find_all('td')
                 temp_class_tuple = get_class_code_and_status(data)
-                if temp_class_tuple[0] == class_tuple[0]:
-                    if prev_printed_course_code != span.text:
+                if temp_class_tuple[0] == class_tuple[0]: #tracked class
+                    if prev_printed_course_code != span.text: #print class title upon change
                         class_code = span.text
                         span = course_header.find('span', class_='courseTitle')
                         class_title = span.text
                         print(class_code + " " + class_title)
                         prev_printed_course_code = class_code
-                    if temp_class_tuple[1] == class_tuple[1] or temp_class_tuple[1]  :
-                        print(f"status hasn't changed for class {class_tuple[0]}")
-                    else:
-                        print(f'status has changed for class {class_tuple[0]}!')
+                    if temp_class_tuple[1]:
+                        print(f"class {class_tuple[0]} is open! sending TEXT!")
                         send_textbelt_sms(os.getenv('PHONE_NUMBER'),f"{class_tuple[0]} is now open! Go register")
+                    else:
+                        print(f'{class_tuple[0]} is closed')
               
 def continuous_checkup_function(subject_url,classes_to_track):
     print("\n\nTIME OF CALL\n:"+get_time_str())
     subject_content = get_request(subject_url)
     subject_soup = soup_maker(subject_content)
     find_and_send_text_upon_open_status_for_class(classes_to_track,subject_soup)
-    threading.Timer(300, continuous_checkup_function,[subject_url,classes_to_track]).start()
+    threading.Timer(1500, continuous_checkup_function,[subject_url,classes_to_track]).start()
 
 # # Example usage
 # phone_number = '19494698351'  # Replace with the recipient's phone number
