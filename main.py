@@ -191,7 +191,7 @@ def find_and_send_text_upon_open_status_for_class(classes_to_track, subject_soup
                         class_title = span.text
                         print(class_code + " " + class_title)
                         prev_printed_course_code = class_code
-                    if temp_class_tuple[1] == class_tuple[1]:
+                    if temp_class_tuple[1] == class_tuple[1] or temp_class_tuple[1]  :
                         print(f"status hasn't changed for class {class_tuple[0]}")
                     else:
                         print(f'status has changed for class {class_tuple[0]}!')
