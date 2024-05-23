@@ -2,7 +2,6 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from datetime import datetime
-from twilio.rest import Client
 import os
 import threading
 import time
